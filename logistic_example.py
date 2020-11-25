@@ -27,6 +27,9 @@ if __name__ == "__main__":
     model.fit(x_train, y_train)
     y_preds = model.predict(x_test)
     auc = model.score(y_test, y_preds)
+    print('logistic model auc:')
+    print(auc)
+
 
 
 
