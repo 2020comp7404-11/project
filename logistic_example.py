@@ -18,7 +18,7 @@ class logistic_regression(binary_model):
         fpr, tpr, thresholds = roc_curve(y_test, y_preds, pos_label=pos_label)
         return auc(fpr, tpr)
 
-if __name__ == "__main__":
+def run_logistic_model():
     x_train, x_test, y_train, y_test = read_data()
     logit_reg = LogisticRegression(C=1.0, fit_intercept=True, penalty='l2', dual=False,
                                    tol=1e-5, max_iter=5000)
@@ -30,12 +30,7 @@ if __name__ == "__main__":
     test_auc = round(roc_auc_score(y_test, pred_ans), 4)
     print("test LogLoss", test_logloss, 4)
     print("test AUC", test_auc, 4)
+    return pred_ans, y_test, test_auc, 'logistic'
 
-    fpr, tpr, thresholds = roc_curve(y_test, pred_ans, pos_label=0)
-    plot_roc(tpr, fpr, test_auc, 'logistic')
-
-
-
-
-
-
+if __name__ == "__main__":
+    run_logistic_model()
