@@ -2,7 +2,6 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from sklearn.model_selection import train_test_split
-from deepctr.models import DeepFM
 from deepctr.feature_column import SparseFeat, DenseFeat,get_feature_names
 import matplotlib.pyplot as plt
 
@@ -21,8 +20,8 @@ def read_data_as_model():
     sparse_features = ['NumberOfTime30-59DaysPastDueNotWorse', 'NumberOfTimes90DaysLate', 'NumberOfTime60-89DaysPastDueNotWorse', 'NumberOfDependents']
     dense_features = ['RevolvingUtilizationOfUnsecuredLines', 'age', 'DebtRatio', 'MonthlyIncome', 'NumberOfOpenCreditLinesAndLoans', 'NumberRealEstateLoansOrLines']
 
-    data[sparse_features] = data[sparse_features].fillna(-1, )
-    data[dense_features] = data[dense_features].fillna(-1,)
+    data[sparse_features] = data[sparse_features].fillna(0)
+    data[dense_features] = data[dense_features].fillna(data[dense_features].mean())
     target = ['SeriousDlqin2yrs']
 
     # 1.Label Encoding for sparse features,and do simple Transformation for dense features
