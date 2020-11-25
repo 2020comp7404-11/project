@@ -1,4 +1,4 @@
-from sklearn import metrics
+from sklearn.metrics import log_loss, roc_auc_score, roc_curve, auc
 from sklearn.linear_model import LogisticRegression
 from binary_model import binary_model
 from utils import *
@@ -15,9 +15,8 @@ class logistic_regression(binary_model):
         return y_preds
 
     def score(self, y_test, y_preds, pos_label=1):
-        fpr, tpr, thresholds = metrics.roc_curve(y_test, y_preds, pos_label=pos_label)
-        auc = metrics.auc(fpr, tpr)
-        return auc
+        fpr, tpr, thresholds = roc_curve(y_test, y_preds, pos_label=pos_label)
+        return auc(fpr, tpr)
 
 if __name__ == "__main__":
     x_train, x_test, y_train, y_test = read_data()
@@ -25,10 +24,16 @@ if __name__ == "__main__":
                                    tol=1e-5, max_iter=5000)
     model = logistic_regression(model=logit_reg)
     model.fit(x_train, y_train)
-    y_preds = model.predict(x_test)
-    auc = model.score(y_test, y_preds)
-    print('logistic model auc:')
-    print(auc)
+    pred_ans = model.predict(x_test)
+
+    test_logloss = round(log_loss(y_test, pred_ans), 4)
+    test_auc = round(roc_auc_score(y_test, pred_ans), 4)
+    print("test LogLoss", test_logloss, 4)
+    print("test AUC", test_auc, 4)
+
+    fpr, tpr, thresholds = roc_curve(y_test, pred_ans, pos_label=0)
+    plot_roc(tpr, fpr, test_auc, 'logistic')
+
 
 
 
