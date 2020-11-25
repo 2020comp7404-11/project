@@ -6,8 +6,7 @@ from deepctr.models import DeepFM
 
 if __name__ == "__main__":
 
- train, test, train_model_input, test_model_input, dnn_feature_columns, linear_feature_columns, feature_names, target = read_data_as_model()
-
+    train, test, train_model_input, test_model_input, dnn_feature_columns, linear_feature_columns, feature_names, target = read_data_as_model()
 
     #Define Model,train,predict and evaluate
     model = DeepFM(linear_feature_columns, dnn_feature_columns, task='binary')

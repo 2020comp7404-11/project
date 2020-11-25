@@ -4,6 +4,7 @@ from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from sklearn.model_selection import train_test_split
 from deepctr.models import DeepFM
 from deepctr.feature_column import SparseFeat, DenseFeat,get_feature_names
+import matplotlib.pyplot as plt
 
 def read_data():
     target_col = ['SeriousDlqin2yrs']
@@ -12,11 +13,6 @@ def read_data():
     x, y = df.drop(target_col, axis=1), df[target_col]
     # fillna with zero
     x.fillna(0, inplace=True)
-    # generate categorical data using binning method
-    origin_col = ['RevolvingUtilizationOfUnsecuredLines', 'age', 'DebtRatio', 'MonthlyIncome']
-    bin_num = 6
-    for col in origin_col:
-        x[col + '_binning'] = pd.qcut(x[col], bin_num, labels=False, duplicates='drop').values
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=1234)
     return x_train, x_test, y_train, y_test
 
@@ -53,3 +49,17 @@ def read_data_as_model():
     test_model_input = {name:test[name] for name in feature_names}
 
     return train, test, train_model_input, test_model_input, dnn_feature_columns, linear_feature_columns, feature_names, target
+
+def plot_roc(fpr_list, tpr_list, auc_list, name_list):
+    plt.figure(figsize=(6, 6))
+    plt.title('Validation ROC')
+    for i in range(len(fpr_list)):
+        plt.plot(fpr_list[i], tpr_list[i], label='%s AUC = %s' % (name_list[i], auc_list[i]))
+
+    plt.plot([0, 1], [0, 1], 'r--')
+    plt.legend(loc='lower right')
+    plt.xlim([0, 1])
+    plt.ylim([0, 1])
+    plt.ylabel('True Positive Rate')
+    plt.xlabel('False Positive Rate')
+    plt.show()
