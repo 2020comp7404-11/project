@@ -2,7 +2,7 @@ import time
 from logistic_example import run_logistic_model
 from deep_wide import run_deep_wide_model
 from deepFM import run_deepfm_model
-from fm import run_fm_model
+from fm2 import run_fm_model
 from xdeepfm import run_xdeepfm_model
 from utils import plot_roc
 from sklearn.metrics import roc_curve
