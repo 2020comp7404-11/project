@@ -1,6 +1,7 @@
 # How does feature interaction impact recommendation algorithm
 ###### COMP7404 Project Group 11
 
+[https://github.com/2020comp7404-11/project](https://github.com/2020comp7404-11/project)
 
 ### Setup
 - Python 3.7 is needed, if your local python version is different, `virtualenv` should be used:
